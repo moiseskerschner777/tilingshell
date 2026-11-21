@@ -208,7 +208,8 @@ export default class GlobalState extends GObject.Object {
                 i < old_selected_layouts.length ? old_selected_layouts[i] : [];
             while (monitors_layouts.length < n_monitors)
                 monitors_layouts.push(this._layouts[0].id);
-            while (monitors_layouts.length > n_monitors) monitors_layouts.pop();
+            // do not drop the layouts of monitors that are temporarily missing
+            // (e.g. screen turned off): they are restored when it comes back
 
             monitors_layouts.forEach((_, ind) => {
                 if (
